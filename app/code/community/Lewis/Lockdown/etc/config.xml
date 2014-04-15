@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+		<Lewis_Lockdown>
+			<version>0.0.1</version>
+			<platform>ce</platform>
+		</Lewis_Lockdown>
+	</modules>
+	<global>
+		<helpers>
+			<lockdown>
+				<class>Lewis_Lockdown_Helper</class>
+			</lockdown>
+		</helpers>
+	</global>
+</config>
