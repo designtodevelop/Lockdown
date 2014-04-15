@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<config>
+	<acl>
+		<resources>
+			<admin>
+				<children>
+					<lockdown translate="title" module="lockdown">
+						<title>Lockdown</title>
+						<sort_order>100</sort_order>
+						<children>
+							<manage translate="title" module="lockdown">
+								<title>Manage Lockdowns</title>
+								<sort_order>10</sort_order>
+							</manage>
+						</children>
+					</lockdown>
+				</children>
+			</admin>
+		</resources>
+	</acl>
+	<menu>
+		<lockdown translate="title" module="lockdown">
+			<title>Lockdown</title>
+			<sort_order>100</sort_order>
+			<children>
+				<manage translate="title" module="lockdown">
+					<title>Manage Lockdowns</title>
+					<action>adminhtml/lockdown</action>
+					<sort_order>10</sort_order>
+				</manage>
+			</children>
+		</lockdown>
+	</menu>
+</config>

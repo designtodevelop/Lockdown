@@ -2,11 +2,16 @@
 <config>
 	<modules>
 		<Lewis_Lockdown>
-			<version>0.0.2</version>
+			<version>0.0.3</version>
 			<platform>ce</platform>
 		</Lewis_Lockdown>
 	</modules>
 	<global>
+		<blocks>
+			<lockdown_admin>
+				<class>Lewis_Lockdown_Block_Adminhtml</class>
+			</lockdown_admin>
+		</blocks>
 		<helpers>
 			<lockdown>
 				<class>Lewis_Lockdown_Helper</class>
@@ -15,9 +20,55 @@
 		<models>
 			<lockdown>
 				<class>Lewis_Lockdown_Model</class>
+				<resourceModel>lockdown_resource</resourceModel>
 			</lockdown>
+			<lockdown_resource>
+				<class>Lewis_Lockdown_Model_Resource</class>
+				<entities>
+					<lockdown>
+						<table>lockdown_entity</table>
+					</lockdown>
+				</entities>
+			</lockdown_resource>
 		</models>
+		<resources>
+			<lockdown_setup>
+				<setup>
+					<module>Lewis_Lockdown</module>
+					<class>Lewis_Lockdown_Model_Resource_Setup</class>
+				</setup>
+			</lockdown_setup>
+		</resources>
 	</global>
+	<adminhtml>
+		<layout>
+			<updates>
+				<lockdown>
+					<file>lockdown.xml</file>
+				</lockdown>
+			</updates>
+		</layout>
+	</adminhtml>
+	<admin>
+		<routers>
+			<!--
+			<lockdown_admin>
+				<use>admin</use>
+				<args>
+					<module>Lewis_Lockdown_Adminhtml</module>
+					<frontName>lockdown_admin</frontName>
+				</args>
+			</lockdown_admin>
+			-->
+			<adminhtml>
+				<args>
+					<modules>
+						<Lewis_Lockdown_Adminhtml before="Mage_Adminhtml">Lewis_Lockdown_Adminhtml</Lewis_Lockdown_Adminhtml>
+					</modules>
+				</args>
+			</adminhtml>
+		</routers>
+	</admin>
 	<frontend>
 		<events>
 			<controller_action_layout_load_before>
