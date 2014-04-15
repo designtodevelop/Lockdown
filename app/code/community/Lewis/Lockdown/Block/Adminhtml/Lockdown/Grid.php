@@ -15,7 +15,7 @@ class Lewis_Lockdown_Block_Adminhtml_Lockdown_Grid extends Mage_Adminhtml_Block_
 	}
 
 	protected function _prepareColumns() {
-		$h = Mage::helper('lockdown');
+		$h = $this->helper('lockdown');
 
 		$this->addColumn('identifier', array(
 			'header' => $h->__('Identifier'),
@@ -26,7 +26,9 @@ class Lewis_Lockdown_Block_Adminhtml_Lockdown_Grid extends Mage_Adminhtml_Block_
 		$this->addColumn('active', array(
 			'header' => $h->__('Active'),
 			'align' => 'left',
-			'index' => 'active'
+			'index' => 'active',
+			'type' => 'options',
+			'options' => Mage::getModel('adminhtml/system_config_source_yesno')->toArray()
 		));
 
 		return parent::_prepareColumns();

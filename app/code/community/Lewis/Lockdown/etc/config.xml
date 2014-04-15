@@ -2,15 +2,19 @@
 <config>
 	<modules>
 		<Lewis_Lockdown>
-			<version>0.0.3</version>
+			<version>0.0.4</version>
 			<platform>ce</platform>
 		</Lewis_Lockdown>
 	</modules>
 	<global>
 		<blocks>
-			<lockdown_admin>
+			<lockdown>
+				<class>Lewis_Lockdown_Block</class>
+			</lockdown>
+			<!-- support for some admin form blocks, prevents url issues -->
+			<lockdown_adminhtml>
 				<class>Lewis_Lockdown_Block_Adminhtml</class>
-			</lockdown_admin>
+			</lockdown_adminhtml>
 		</blocks>
 		<helpers>
 			<lockdown>
@@ -51,15 +55,6 @@
 	</adminhtml>
 	<admin>
 		<routers>
-			<!--
-			<lockdown_admin>
-				<use>admin</use>
-				<args>
-					<module>Lewis_Lockdown_Adminhtml</module>
-					<frontName>lockdown_admin</frontName>
-				</args>
-			</lockdown_admin>
-			-->
 			<adminhtml>
 				<args>
 					<modules>

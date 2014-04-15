@@ -11,6 +11,16 @@
 							<manage translate="title" module="lockdown">
 								<title>Manage Lockdowns</title>
 								<sort_order>10</sort_order>
+								<children>
+									<save translate="title" module="lockdown">
+										<title>Save Lockdown</title>
+										<sort_order>10</sort_order>
+									</save>
+									<delete>
+										<title>Delete Lockdown</title>
+										<sort_order>20</sort_order>
+									</delete>
+								</children>
 							</manage>
 						</children>
 					</lockdown>

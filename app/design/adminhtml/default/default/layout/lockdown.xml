@@ -2,7 +2,25 @@
 <layout>
 	<adminhtml_lockdown_index>
 		<reference name="content">
-			<block type="lockdown_admin/lockdown" name="lockdown"/>
+			<block type="lockdown/adminhtml_lockdown" name="lockdown"/>
 		</reference>
 	</adminhtml_lockdown_index>
+	<adminhtml_lockdown_new>
+		<update handle="adminhtml_lockdown_edit"/>
+	</adminhtml_lockdown_new>
+	<adminhtml_lockdown_edit>
+		<update handle="editor"/>
+		<reference name="content">
+			<block type="lockdown/adminhtml_lockdown_edit" name="lockdown_edit"/>
+		</reference>
+		<reference name="left">
+			<block type="lockdown/adminhtml_lockdown_edit_tabs" name="lockdown_edit.tabs">
+				<block type="lockdown/adminhtml_lockdown_edit_tab_main" name="lockdown_edit.tabs.main"/>
+				<action method="addTab">
+					<name>main</name>
+					<block>lockdown_edit.tabs.main</block>
+				</action>
+			</block>
+		</reference>
+	</adminhtml_lockdown_edit>
 </layout>
