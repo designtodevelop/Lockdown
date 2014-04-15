@@ -7,6 +7,7 @@ class Lewis_Lockdown_Block_Adminhtml_Lockdown_Edit_Tab_Main extends Mage_Adminht
 
 		$form = new Varien_Data_Form;
 		$form->setHtmlIdPrefix('lockdown_');
+		$form->setFieldNameSuffix('lockdown');
 
 		$h = $this->helper('lockdown');
 

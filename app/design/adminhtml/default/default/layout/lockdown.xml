@@ -23,4 +23,23 @@
 			</block>
 		</reference>
 	</adminhtml_lockdown_edit>
+	<!-- ajax grid action for cms pages in adminhtml lockdown edit -->
+	<adminhtml_lockdown_pagesinit>
+		<update handle="adminhtml_lockdown_pagesgrid"/>
+		<reference name="root">
+			<block type="adminhtml/widget_grid_serializer" name="cms_page_apply_grid_serializer">
+				<action method="initSerializerBlock">
+					<grid_block_name>lockdown_edit.tabs.page_grid</grid_block_name>
+					<data_callback>getSelectedPages</data_callback>
+					<hidden_input_name>lockdown[cms_pages]</hidden_input_name>
+					<reload_param_name>lockdown[cms_pages]</reload_param_name>
+				</action>
+			</block>
+		</reference>
+	</adminhtml_lockdown_pagesinit>
+	<adminhtml_lockdown_pagesgrid>
+		<block type="core/text_list" name="root" output="toHtml">
+			<block type="lockdown/adminhtml_lockdown_edit_tab_page_grid" name="lockdown_edit.tabs.page_grid"/>
+		</block>
+	</adminhtml_lockdown_pagesgrid>
 </layout>
