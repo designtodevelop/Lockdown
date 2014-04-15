@@ -2,7 +2,7 @@
 <config>
 	<modules>
 		<Lewis_Lockdown>
-			<version>0.0.1</version>
+			<version>0.0.2</version>
 			<platform>ce</platform>
 		</Lewis_Lockdown>
 	</modules>
@@ -12,5 +12,29 @@
 				<class>Lewis_Lockdown_Helper</class>
 			</lockdown>
 		</helpers>
+		<models>
+			<lockdown>
+				<class>Lewis_Lockdown_Model</class>
+			</lockdown>
+		</models>
 	</global>
+	<frontend>
+		<events>
+			<controller_action_layout_load_before>
+				<observers>
+					<lockdown_login_init_layout_handle>
+						<class>lockdown/observer</class>
+						<method>initLayoutHandle</method>
+					</lockdown_login_init_layout_handle>
+				</observers>
+			</controller_action_layout_load_before>
+		</events>
+		<layout>
+			<updates>
+				<lockdown>
+					<file>lockdown.xml</file>
+				</lockdown>
+			</updates>
+		</layout>
+	</frontend>
 </config>

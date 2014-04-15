@@ -4,6 +4,9 @@
 		<Lewis_Lockdown>
 			<active>true</active>
 			<codePool>community</codePool>
+			<depends>
+				<Mage_Cms/>
+			</depends>
 		</Lewis_Lockdown>
 	</modules>
 </config>

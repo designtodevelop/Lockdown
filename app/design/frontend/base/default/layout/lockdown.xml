@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<layout>
+	<lockdown_login_form>
+		<reference name="content">
+			<block type="core/template" name="lockdown.login_form" template="lockdown/login_form.phtml"/>
+		</reference>
+	</lockdown_login_form>
+	<lockdown_login_cms>
+		<remove name="page_content_heading"/>
+		<remove name="cms.wrapper"/>
+		<update handle="lockdown_login_form"/>
+	</lockdown_login_cms>
+</layout>
