@@ -21,6 +21,11 @@ class Lewis_Lockdown_Block_Adminhtml_Lockdown_Edit_Tab_Main extends Mage_Adminht
 			));
 		}
 
+		$fieldset->addField('cms_pages_update', 'hidden', array(
+			'name' => 'cms_pages_update',
+			'value' => 0
+		));
+
 		$fieldset->addField('identifier', 'text', array(
 			'name' => 'identifier',
 			'label' => $h->__('Identifier'),

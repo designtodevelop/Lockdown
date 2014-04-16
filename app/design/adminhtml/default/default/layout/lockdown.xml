@@ -35,6 +35,7 @@
 					<reload_param_name>lockdown[cms_pages]</reload_param_name>
 				</action>
 			</block>
+			<block type="adminhtml/template" name="lockdown_edit.tabs.page_grid.toggle_update" template="lockdown/edit/tabs/page/toggle_update.phtml"/>
 		</reference>
 	</adminhtml_lockdown_pagesinit>
 	<adminhtml_lockdown_pagesgrid>

@@ -37,10 +37,8 @@ class Lewis_Lockdown_Adminhtml_LockdownController extends Mage_Adminhtml_Control
 		if ($id = $this->getRequest()->getParam('lockdown_id')) {
 			$l->load($id);
 		}
-		else if ($this->getRequest()->isPost() && $p = $this->getRequest()->getPost('lockdown')) {
-			if (isset($p['lockdown_id'])) {
-				$l->load($p['lockdown_id']);
-			}
+		else if ($id = $this->helper('lockdown/adminhtml')->getPost('lockdown_id')) {
+			$l->load($id);
 		}
 
 		Mage::register('current_lockdown', $l);
@@ -67,6 +65,7 @@ class Lewis_Lockdown_Adminhtml_LockdownController extends Mage_Adminhtml_Control
 	public function pagesGridAction() {
 		$this->_initLockdown();
 		$this->loadLayout();
+		$this->getLayout()->getBlock('lockdown_edit.tabs.page_grid')->disablePreselect(true);
 		$this->renderLayout();
 	}
 
@@ -78,18 +77,18 @@ class Lewis_Lockdown_Adminhtml_LockdownController extends Mage_Adminhtml_Control
 			return;
 		}
 
-		$post = $this->getRequest()->getPost('lockdown');
+		$post = $this->helper('lockdown/adminhtml')->getPost();
 		foreach ($post as $k=>$v) {
-			if ($k == 'lockdown_id' || is_array($v)) {
-				continue;
-			}
-
-			if ($k == 'cms_pages') {
-				$cmsPages = $k;
+			if ($k == 'lockdown_id') {
 				continue;
 			}
 
 			$l->setData($k, $v);
+		}
+
+		// if all cms pages unchecked no values are sent, ensure any existing entries are cleared
+		if ($this->helper('lockdown/adminhtml')->getPost('cms_pages_update') && ! $l->getData('cms_pages')) {
+			$l->setData('cms_pages', array());
 		}
 
 		$h = $this->helper('lockdown');
@@ -104,16 +103,7 @@ class Lewis_Lockdown_Adminhtml_LockdownController extends Mage_Adminhtml_Control
 			return;
 		}
 
-		if (isset($cmsPages)) {
-			$this->saveCmsPageRelations($cmsPages);
-		}
-
 		$this->_redirect('*/*/');
-	}
-
-	protected function saveCmsPageRelations($cmsPages) {
-		$l = $this->_initLockdown();
-		//wip
 	}
 
 	public function deleteAction() {

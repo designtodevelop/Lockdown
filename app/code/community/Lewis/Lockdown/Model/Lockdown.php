@@ -7,4 +7,8 @@ class Lewis_Lockdown_Model_Lockdown extends Mage_Core_Model_Abstract {
 	protected function _construct() {
 		$this->_init('lockdown/lockdown');
 	}
+
+	public function getCmsPageRelations() {
+		return Mage::getSingleton('lockdown/relation_page')->getRelations($this);
+	}
 }

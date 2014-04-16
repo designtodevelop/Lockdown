@@ -10,14 +10,35 @@ class Lewis_Lockdown_Block_Adminhtml_Lockdown_Edit_Tab_Page_Grid extends Mage_Ad
 		$this->setUseAjax(true);
 	}
 
+	protected function _addColumnFilterToCollection($column) {
+		if ($column->getId() == 'cms_page') {
+			$ids = $this->getSelectedPages();
+			if ($column->getFilter()->getValue()) {
+				$this->getCollection()->addFieldToFilter('page_id', array('in' => $ids));
+			}
+			else if (count($ids)) {
+				$this->getCollection()->addFieldToFilter('page_id', array('nin' => $ids));
+			}
+
+			return $this;
+		}
+
+		return parent::_addColumnFilterToCollection($column);
+	}
+
 	protected function _prepareCollection() {
 		$c = Mage::getResourceModel('cms/page_collection');
 		$this->setCollection($c);
 		return parent::_prepareCollection();
 	}
 
+	protected $_preselectDisabled = false;
+	public function disablePreselect() {
+		$this->_preselectDisabled = true;
+	}
+
 	protected function getPreselectedPages() {
-		return array();
+		return Mage::registry('current_lockdown')->getCmsPageRelations();
 	}
 
 	// selections via ajax
@@ -27,6 +48,7 @@ class Lewis_Lockdown_Block_Adminhtml_Lockdown_Edit_Tab_Page_Grid extends Mage_Ad
 		if (is_array($post) && isset($post['cms_pages'])) {
 			return $post['cms_pages'];
 		}
+		return null;
 	}
 
 	public function getSelectedPages() {
@@ -37,7 +59,10 @@ class Lewis_Lockdown_Block_Adminhtml_Lockdown_Edit_Tab_Page_Grid extends Mage_Ad
 			$this->setSelectedPages($p);
 			return $p;
 		}
-		return $this->getPreselectedPages();
+		else if (! $this->_preselectDisabled) {
+			return $this->getPreselectedPages();
+		}
+		return array();
 	}
 
 	public function getGridUrl() {
@@ -45,9 +70,9 @@ class Lewis_Lockdown_Block_Adminhtml_Lockdown_Edit_Tab_Page_Grid extends Mage_Ad
 	}
 
 	protected function _prepareColumns() {
-		$this->addColumn('cms_page_apply', array(
+		$this->addColumn('cms_page', array(
 			'type' => 'checkbox',
-			'name' => 'cms_page_apply',
+			'name' => 'cms_page',
 			'values' => $this->getSelectedPages(),
 			'index' => 'page_id',
 			'header_css_class' => 'a-center',

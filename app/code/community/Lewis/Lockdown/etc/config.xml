@@ -2,7 +2,7 @@
 <config>
 	<modules>
 		<Lewis_Lockdown>
-			<version>0.0.5</version>
+			<version>0.0.6</version>
 			<platform>ce</platform>
 		</Lewis_Lockdown>
 	</modules>
@@ -32,6 +32,9 @@
 					<lockdown>
 						<table>lockdown_entity</table>
 					</lockdown>
+					<relation_page>
+						<table>lockdown_entity_rel_page</table>
+					</relation_page>
 				</entities>
 			</lockdown_resource>
 		</models>
@@ -43,6 +46,17 @@
 				</setup>
 			</lockdown_setup>
 		</resources>
+		<events>
+			<lockdown_save_after>
+				<observers>
+					<update_cms_page_relations>
+						<type>singleton</type>
+						<class>lockdown/relation_page</class>
+						<method>updateRelations</method>
+					</update_cms_page_relations>
+				</observers>
+			</lockdown_save_after>
+		</events>
 	</global>
 	<adminhtml>
 		<layout>
@@ -69,6 +83,7 @@
 			<controller_action_layout_load_before>
 				<observers>
 					<lockdown_login_init_layout_handle>
+						<type>singleton</type>
 						<class>lockdown/observer</class>
 						<method>initLayoutHandle</method>
 					</lockdown_login_init_layout_handle>
