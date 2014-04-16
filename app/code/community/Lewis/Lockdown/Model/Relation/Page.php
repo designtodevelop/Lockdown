@@ -19,7 +19,12 @@ class Lewis_Lockdown_Model_Relation_Page {
 			'main_table.page_id=rel.page_id',
 			'rel.lockdown_id'
 		);
-		$pageCollection->getSelect()->where('rel.lockdown_id is null or rel.lockdown_id='.$l->getId());
+		if ($l->getId()) {
+			$pageCollection->getSelect()->where('rel.lockdown_id is null or rel.lockdown_id='.$l->getId());
+		}
+		else {
+			$pageCollection->getSelect()->where('rel.lockdown_id is null');
+		}
 	}
 
 	public function getRelations($l) {

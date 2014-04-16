@@ -49,8 +49,12 @@ class Lewis_Lockdown_Model_Session extends Mage_Core_Model_Session_Abstract {
 	}
 
 	public function authenticate() {
+		$l = $this->getLockdown();
+		$currId = $l->getId();
+		if (! $currId || ! $l->getActive()) {
+			return true;
+		}
 		if ($this->requireBasicAuth()) {
-			$currId = $this->getLockdown()->getId();
 			$hashes = $this->getHashes();
 			if (! in_array($currId, array_keys($hashes))) {
 				return false;
