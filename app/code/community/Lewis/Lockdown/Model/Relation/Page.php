@@ -13,6 +13,15 @@ class Lewis_Lockdown_Model_Relation_Page {
 		return $this->getResource()->getConnection()->query($sql);
 	}
 
+	public function removeUnavailableWithJoin($l, $pageCollection) {
+		$pageCollection->getSelect()->joinLeft(
+			array('rel' => $this->getTable()),
+			'main_table.page_id=rel.page_id',
+			'rel.lockdown_id'
+		);
+		$pageCollection->getSelect()->where('rel.lockdown_id is null or rel.lockdown_id='.$l->getId());
+	}
+
 	public function getRelations($l) {
 		return $this->_get($l->getId());
 	}

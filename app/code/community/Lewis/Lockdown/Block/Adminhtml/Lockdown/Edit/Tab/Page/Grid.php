@@ -1,6 +1,6 @@
 <?php
 
-class Lewis_Lockdown_Block_Adminhtml_Lockdown_Edit_Tab_Page_Grid extends Mage_Adminhtml_Block_Cms_Page_Grid {
+class Lewis_Lockdown_Block_Adminhtml_Lockdown_Edit_Tab_Page_Grid extends Mage_Adminhtml_Block_Widget_Grid {
 	public function __construct() {
 		parent::__construct();
 		$this->setId('cmsPagesGrid');
@@ -28,8 +28,24 @@ class Lewis_Lockdown_Block_Adminhtml_Lockdown_Edit_Tab_Page_Grid extends Mage_Ad
 
 	protected function _prepareCollection() {
 		$c = Mage::getResourceModel('cms/page_collection');
+		$c->setFirstStoreFlag(true);
+		$l = Mage::registry('current_lockdown');
+		Mage::getSingleton('lockdown/relation_page')->removeUnavailableWithJoin($l, $c);
 		$this->setCollection($c);
 		return parent::_prepareCollection();
+	}
+
+	protected function _afterLoadCollection() {
+		$this->getCollection()->walk('afterLoad');
+		parent::_afterLoadCollection();
+	}
+
+	protected function _filterStoreCondition($collection, $column) {
+		if (! $value = $column->getFilter()->getValue()) {
+			return;
+		}
+
+		$this->getCollection()->addStoreFilter($value);
 	}
 
 	protected $_preselectDisabled = false;
@@ -79,13 +95,45 @@ class Lewis_Lockdown_Block_Adminhtml_Lockdown_Edit_Tab_Page_Grid extends Mage_Ad
 			'align' => 'center'
 		));
 
-		$r = parent::_prepareColumns();
+		$this->addColumn('title', array(
+			'header' => Mage::helper('cms')->__('Title'),
+			'align' => 'left',
+			'index' => 'title'
+		));
 
-		$this->removeColumn('creation_time');
-		$this->removeColumn('update_time');
-		$this->removeColumn('page_actions');
+		$this->addColumn('identifier', array(
+			'header' => Mage::helper('cms')->__('URL Key'),
+			'align' => 'left',
+			'index' => 'identifier'
+		));
 
-		return $r;
+		$this->addColumn('root_template', array(
+			'header' => Mage::helper('cms')->__('Layout'),
+			'index' => 'root_template',
+			'type' => 'options',
+			'options' => Mage::getSingleton('page/source_layout')->getOptions()
+		));
+
+		if (! Mage::app()->isSingleStoreMode()) {
+			$this->addColumn('store_id', array(
+				'header' => Mage::helper('cms')->__('Store View'),
+				'index' => 'store_id',
+				'type' => 'store',
+				'store_all' => true,
+				'store_view' => true,
+				'sortable' => false,
+				'filter_condition_callback' => array($this, '_filterStoreCondition')
+			));
+		}
+
+		$this->addColumn('is_active', array(
+			'header' => Mage::helper('cms')->__('Status'),
+			'index' => 'is_active',
+			'type' => 'options',
+			'options' => Mage::getSingleton('cms/page')->getAvailableStatuses()
+		));
+
+		return parent::_prepareColumns();
 	}
 
 	public function getRowUrl($item) {
