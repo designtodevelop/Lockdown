@@ -1,1 +1,32 @@
-<h1><?php echo $this->__('Unauthorized access') ?></h1>
+<form action="<?php echo $this->getLoginUrl() ?>" method="post" id="lockdown">
+	<div class="fieldset">
+		<h2 class="legend"><?php echo $this->__('Authentication') ?></h2>
+		<p><?php echo $this->__('Please provide a valid login to access this page.') ?></p>
+		<input type="hidden" name="lockdown_id" value="<?php echo $this->getLockdownId() ?>"/>
+		<ul class="form-list">
+			<li class="fields">
+				<div class="field">
+					<label for="auth_username" class="required"><?php echo $this->__('Username') ?><em>*</em></label>
+					<div class="input-box">
+						<input type="text" name="auth_username" id="auth_username" class="input-text required-entry"/>
+					</div>
+				</div>
+				<div class="field">
+					<label for="auth_password" class="required"><?php echo $this->__('Password') ?><em>*</em></label>
+					<div class="input-box">
+						<input type="password" name="auth_password" id="auth_password" class="input-text required-entry"/>
+					</div>
+				</div>
+			</li>
+		</ul>
+	</div>
+    <div class="buttons-set">
+        <p class="required"><?php echo $this->__('* Required Fields') ?></p>
+        <button type="submit" title="<?php echo $this->__('Submit') ?>" class="button"><span><span><?php echo $this->__('Submit') ?></span></span></button>
+    </div>
+</form>
+<script type="text/javascript">
+//<![CDATA[
+var lockdownForm = new VarienForm('lockdown');
+//]]>
+</script>

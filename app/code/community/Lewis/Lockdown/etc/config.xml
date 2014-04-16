@@ -2,7 +2,7 @@
 <config>
 	<modules>
 		<Lewis_Lockdown>
-			<version>0.0.9</version>
+			<version>0.0.10</version>
 			<platform>ce</platform>
 		</Lewis_Lockdown>
 	</modules>
@@ -97,5 +97,14 @@
 				</lockdown>
 			</updates>
 		</layout>
+		<routers>
+			<lockdown>
+				<use>standard</use>
+				<args>
+					<module>Lewis_Lockdown</module>
+					<frontName>lockdown</frontName>
+				</args>
+			</lockdown>
+		</routers>
 	</frontend>
 </config>
