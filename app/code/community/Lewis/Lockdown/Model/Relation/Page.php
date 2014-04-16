@@ -17,6 +17,14 @@ class Lewis_Lockdown_Model_Relation_Page {
 		return $this->_get($l->getId());
 	}
 
+	public function getLockdown($pageId) {
+		if ($pageId instanceof Mage_Cms_Model_Page) {
+			$pageId = $pageId->getId();
+		}
+
+		return $this->_getp($pageId);
+	}
+
 	public function updateRelations($o) {
 		$l = $o->getEvent()->getLockdown();
 		if (! $l->hasData('cms_pages')) {
@@ -62,6 +70,19 @@ class Lewis_Lockdown_Model_Relation_Page {
 			$flat[] = (int)$b['page_id'];
 		}
 		return $flat;
+	}
+
+	protected function _getp($pageId) {
+		$sql = sprintf('select `lockdown_id` from `%s` where `page_id`=%d;',
+			$this->getTable(),
+			$pageId
+		);
+		$a = $this->query($sql)->fetchAll();
+		if (count($a)) {
+			$a = array_shift($a);
+			return $a['lockdown_id'];
+		}
+		return null;
 	}
 
 	protected function _add($lockdownId, $pageIds) {
