@@ -23,6 +23,20 @@ class Lewis_Lockdown_Block_Adminhtml_Lockdown_Grid extends Mage_Adminhtml_Block_
 			'index' => 'identifier'
 		));
 
+		$this->addColumn('auth_type', array(
+			'header' => $h->__('Authentication Type'),
+			'align' => 'left',
+			'index' => 'auth_type',
+			'type' => 'options',
+			'options' => Mage::getModel('lockdown/system_config_source_auth_type')->toArray()
+		));
+
+		$this->addColumn('auth_username', array(
+			'header' => $h->__('Username'),
+			'align' => 'left',
+			'index' => 'auth_username'
+		));
+
 		$this->addColumn('active', array(
 			'header' => $h->__('Active'),
 			'align' => 'left',
