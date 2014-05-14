@@ -10,7 +10,7 @@ class Lewis_Lockdown_Model_Relation_Page {
 	}
 
 	protected function query($sql) {
-		return $this->getResource()->getConnection()->query($sql);
+		return $this->getResource()->getConnection('core_write')->query($sql);
 	}
 
 	public function removeUnavailableWithJoin($l, $pageCollection) {

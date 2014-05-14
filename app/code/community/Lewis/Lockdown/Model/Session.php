@@ -56,7 +56,7 @@ class Lewis_Lockdown_Model_Session extends Mage_Core_Model_Session_Abstract {
 		}
 		if ($this->requireBasicAuth()) {
 			$hashes = $this->getHashes();
-			if (! in_array($currId, array_keys($hashes))) {
+			if (! count($hashes) || ! in_array($currId, array_keys($hashes))) {
 				return false;
 			}
 			$currHash = $this->getLockdown()->getHash();
